@@ -50,7 +50,7 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 	}
 
 	func refreshStories(_ sender: Any) {
-		let url = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts")
+		let url = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?per_page=30")
 		let request = URLRequest(url: url!)
 		let session = URLSession(configuration: URLSessionConfiguration.default)
 		_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
