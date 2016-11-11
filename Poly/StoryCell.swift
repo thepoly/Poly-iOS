@@ -12,7 +12,6 @@ class StoryCell: UITableViewCell {
 	
 	var kickerLabel = UILabel()
 	var titleLabel = UILabel()
-	var photoView = UIImageView()
 	
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -39,26 +38,6 @@ class StoryCell: UITableViewCell {
 			views: ["kicker": self.kickerLabel])
 		)
 		
-		// Photo
-		self.photoView.translatesAutoresizingMaskIntoConstraints = false
-		self.contentView.addSubview(self.photoView)
-		// Maximum photo height
-		self.photoView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:[photo(<=200)]",
-			options: [],
-			metrics: nil,
-			views: ["photo": self.photoView])
-		)
-		self.photoView.contentMode = UIViewContentMode.scaleAspectFill
-		self.photoView.clipsToBounds = true
-		// Zero spacing on sides of photo
-		self.contentView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:|-0-[photo]-0-|",
-			options: [],
-			metrics: nil,
-			views: ["photo": self.photoView])
-		)
-		
 		// Title
 		self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		self.contentView.addSubview(self.titleLabel)
@@ -76,15 +55,15 @@ class StoryCell: UITableViewCell {
 		
 		// Vertical layout
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]-10-[photo]-10-[title]-20-|",
+			withVisualFormat: "V:|-15-[kicker]-10@750-[title]-20-|",  // priority of 750 allows StoryPhotoCell to override it
 			options: [],
 			metrics: nil,
-			views: ["photo": self.photoView, "title": self.titleLabel, "kicker": self.kickerLabel])
+			views: ["title": self.titleLabel, "kicker": self.kickerLabel])
 		)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 }

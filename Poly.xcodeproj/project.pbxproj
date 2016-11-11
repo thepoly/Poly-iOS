@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */; };
 		E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90596CB1DD0425400B52439 /* StoryCell.swift */; };
 		E9AFC71F1DCFBC4500B52439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */; };
 		E9AFC7211DCFBC4500B52439 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC7201DCFBC4500B52439 /* MasterViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryPhotoCell.swift; sourceTree = "<group>"; };
 		E90596CB1DD0425400B52439 /* StoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
 		E9AFC71B1DCFBC4500B52439 /* Poly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */,
 				E90596CB1DD0425400B52439 /* StoryCell.swift */,
+				E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */,
 				E9AFC7201DCFBC4500B52439 /* MasterViewController.swift */,
 				E9AFC7221DCFBC4500B52439 /* DetailViewController.swift */,
 				E9AFC7291DCFBC4500B52439 /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */,
 				E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */,
 				E9AFC7231DCFBC4500B52439 /* DetailViewController.swift in Sources */,
 				E9AFC7211DCFBC4500B52439 /* MasterViewController.swift in Sources */,

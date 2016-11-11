@@ -32,8 +32,9 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshStories(_:)))
 		self.navigationItem.rightBarButtonItem = refreshButton
 		
-		// Table View cell
+		// Table View cells
 		self.tableView.register(StoryCell.classForCoder(), forCellReuseIdentifier: "StoryCell")
+		self.tableView.register(StoryPhotoCell.classForCoder(), forCellReuseIdentifier: "StoryPhotoCell")
 		self.tableView.estimatedRowHeight = 100
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		
@@ -87,9 +88,28 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> StoryCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "StoryCell", for: indexPath) as! StoryCell
-
 		let story = stories[indexPath.row]
+		var cell: StoryCell  // this is okay because StoryPhotoCell is a subclass of StoryCell
+		
+		// If there is a photo, use StoryPhotoCell
+		let photoPath = story["Photo"]! as! String
+		if photoPath == "" {
+			cell = tableView.dequeueReusableCell(withIdentifier: "StoryCell", for: indexPath) as! StoryCell
+		} else {
+			cell = tableView.dequeueReusableCell(withIdentifier: "StoryPhotoCell", for: indexPath) as! StoryPhotoCell
+			
+			// Configure photo
+			let url = URL(string: "https://poly.rpi.edu" + photoPath)
+			let request = URLRequest(url: url!)
+			let session = URLSession(configuration: URLSessionConfiguration.default)
+			_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
+				if error == nil {
+					DispatchQueue.main.async {
+						(cell as! StoryPhotoCell).photoView.image = UIImage(data: data!)
+					}
+				}
+			}).resume()
+		}
 		
 		// Title
 		let title = story["title"]!["rendered"] as! String
@@ -98,23 +118,6 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		// Kicker
 		let kicker = (story["Kicker"] as! String).uppercased()
 		cell.kickerLabel.text = kicker
-		
-		// Photo
-		let photoPath = story["Photo"]! as! String
-		if photoPath != "" {
-			let url = URL(string: "https://poly.rpi.edu" + photoPath)
-			let request = URLRequest(url: url!)
-			let session = URLSession(configuration: URLSessionConfiguration.default)
-			_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
-				if error == nil {
-					DispatchQueue.main.async {
-						cell.photoView.image = UIImage(data: data!)
-					}
-				}
-			}).resume()
-		} else {
-			cell.photoView.image = nil
-		}
 		
 		return cell
 	}
