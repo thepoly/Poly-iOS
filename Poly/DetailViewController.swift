@@ -83,7 +83,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		titleLabel.numberOfLines = 0
 		titleLabel.lineBreakMode = .byWordWrapping
 		// Spacing on sides of title
-		scrollView.addConstraints(NSLayoutConstraint.constraints(
+		containerView.addConstraints(NSLayoutConstraint.constraints(
 			withVisualFormat: "H:|-20-[title]-20-|",
 			options: [],
 			metrics: nil,
@@ -119,6 +119,38 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 			}).resume()
 		}
 		
+		// Author and job
+		let authorLabel = UILabel()
+		authorLabel.translatesAutoresizingMaskIntoConstraints = false
+		containerView.addSubview(authorLabel)
+		
+		let authorAndJob = NSMutableAttributedString()
+		if let authorName = self.detailItem?["AuthorName"] as? String {
+			
+			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14)]
+			let authorString = NSAttributedString(string: authorName, attributes: authorAttrs)
+			authorAndJob.append(authorString)
+			
+			if let authorJob = (self.detailItem?["AuthorTitle"] as? String), authorJob != "" {
+				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13)]
+				let jobString = NSAttributedString(string: ", " + authorJob, attributes: jobAttrs)
+				authorAndJob.append(jobString)
+			}
+			
+		}
+		
+		authorLabel.attributedText = authorAndJob
+		authorLabel.numberOfLines = 0
+		authorLabel.textAlignment = .left
+		authorLabel.lineBreakMode = .byWordWrapping
+		// Spacing on sides of author
+		containerView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-20-[author]-20-|",
+			options: [],
+			metrics: nil,
+			views: ["author": authorLabel])
+		)
+		
 		// Article
 		self.webView.delegate = self
 		self.webView.translatesAutoresizingMaskIntoConstraints = false
@@ -134,10 +166,10 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		
 		// Vertical layout
 		containerView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[photo]-10-[article]-20-|",
+			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[photo]-10-[author]-0-[article]-20-|",
 			options: [],
 			metrics: nil,
-			views: ["photo": photoView, "title": titleLabel, "kicker": kickerLabel, "article": self.webView])
+			views: ["photo": photoView, "title": titleLabel, "kicker": kickerLabel, "article": self.webView, "author": authorLabel])
 		)
 		
 	}
