@@ -28,9 +28,6 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		
 		// 3D Touch Peek and Pop
 		registerForPreviewing(with: self, sourceView: self.view)
-
-		let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshStories(_:)))
-		self.navigationItem.rightBarButtonItem = refreshButton
 		
 		// Table View cells
 		self.tableView.register(StoryCell.classForCoder(), forCellReuseIdentifier: "StoryCell")
@@ -38,7 +35,7 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		self.tableView.estimatedRowHeight = 100
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		
-		self.refreshStories(self)
+		self.refreshStories()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +47,7 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		}
 	}
 
-	func refreshStories(_ sender: Any) {
+	func refreshStories() {
 		let url = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?per_page=30")
 		let request = URLRequest(url: url!)
 		let session = URLSession(configuration: URLSessionConfiguration.default)
