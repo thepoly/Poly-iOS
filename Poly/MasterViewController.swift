@@ -111,11 +111,11 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		
 		// Title
 		let title = story["title"]!["rendered"] as! String
-		cell.titleLabel.text = title
+		cell.titleLabel.text = String(htmlEncodedString: title)
 		
 		// Kicker
 		let kicker = (story["Kicker"] as! String).uppercased()
-		cell.kickerLabel.text = kicker
+		cell.kickerLabel.text = String(htmlEncodedString: kicker)
 		
 		return cell
 	}
