@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import QuartzCore
 
 class StoryPhotoCell: StoryCell {
 	
 	var photoView = UIImageView()
+	var gradient = CAGradientLayer()
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier!)
@@ -29,15 +31,73 @@ class StoryPhotoCell: StoryCell {
 			views: ["photo": self.photoView])
 		)
 		// Photo height
-		self.photoView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+		self.photoView.heightAnchor.constraint(equalToConstant: 240).isActive = true
 		
 		// Vertical layout with photo
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]-10-[photo]-10-[title]-20-|",
+			withVisualFormat: "V:|-0-[photo]-0-|",
 			options: [],
 			metrics: nil,
 			views: ["photo": self.photoView, "title": self.titleLabel, "kicker": self.kickerLabel])
 		)
+		
+		// Remove labels from cell contentView and add them to photoView
+		self.titleLabel.removeFromSuperview()
+		self.kickerLabel.removeFromSuperview()
+		self.photoView.addSubview(self.kickerLabel)
+		self.photoView.addSubview(self.titleLabel)
+		
+		// Spacing on sides of title
+		self.photoView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-20-[title]-20-|",
+			options: [],
+			metrics: nil,
+			views: ["title": self.titleLabel])
+		)
+		// Spacing on sides of kicker
+		self.photoView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-20-[kicker]-20-|",
+			options: [],
+			metrics: nil,
+			views: ["kicker": self.kickerLabel])
+		)
+		
+		// Vertical layout
+		self.photoView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-15-[kicker]->=10-[title]-20-|",  // priority of 750 allows StoryPhotoCell to override it
+			options: [],
+			metrics: nil,
+			views: ["title": self.titleLabel, "kicker": self.kickerLabel])
+		)
+		
+		// Photo shadow
+		gradient.colors = [UIColor.black.withAlphaComponent(0.5).cgColor, UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.5).cgColor]
+		gradient.locations = [0.0, 0.20, 1.0]
+		self.photoView.layer.insertSublayer(gradient, at: 0)
+		
+		// Title shadow
+		self.titleLabel.textColor = UIColor.white
+		self.titleLabel.layer.shadowColor = UIColor.black.cgColor
+		self.titleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+		self.titleLabel.layer.shadowRadius = 50
+		self.titleLabel.layer.shadowOpacity = 1
+		
+		// Kicker shadow
+//		self.kickerLabel.textColor = UIColor(red: 0.8617, green: 0.1186, blue: 0.0198, alpha: 0.7)
+		self.kickerLabel.layer.shadowColor = UIColor.black.cgColor
+		self.kickerLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+		self.kickerLabel.layer.shadowRadius = 5
+		self.kickerLabel.layer.shadowOpacity = 1
+//		self.kickerLabel.backgroundColor = .clear
+//		self.kickerLabel.layer.shouldRasterize = true
+//		self.kickerLabel.layer.masksToBounds = false
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		// Set the correct size for the gradient in photoView
+		self.gradient.frame = self.photoView.bounds;
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
