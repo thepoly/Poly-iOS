@@ -174,6 +174,16 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 			views: ["photo": photoView, "title": titleLabel, "kicker": kickerLabel, "article": self.webView, "author": authorLabel])
 		)
 		
+		// Add share button to navigation bar
+		let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
+		self.navigationItem.rightBarButtonItem = shareButton
+	}
+	
+	func share() {
+		// Share the article with UIActivityViewController
+		let shareURL = NSURL(string: self.detailItem!["link"] as! String)
+		let activityViewController = UIActivityViewController(activityItems: [shareURL as Any], applicationActivities: nil)
+		self.present(activityViewController, animated: true, completion: nil)
 	}
 	
 	func webViewDidFinishLoad(_ webView: UIWebView) {
