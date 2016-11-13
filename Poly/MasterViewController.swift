@@ -56,8 +56,9 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
 				self.stories = json
 				
-				// remove stories in PDF Archives category
-				for (i, story) in self.stories.enumerated() {
+				// Remove stories in PDF Archives category. Iterate in reverse so we can remove
+				// stories by index without off-by-one errors.
+				for (i, story) in self.stories.enumerated().reversed() {
 					if let categories = story["categories"] as? [Int] {
 						if categories.count == 1 {
 							if categories.contains(10) {
