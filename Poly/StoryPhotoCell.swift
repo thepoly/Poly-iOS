@@ -79,18 +79,15 @@ class StoryPhotoCell: StoryCell {
 		self.titleLabel.textColor = UIColor.white
 		self.titleLabel.layer.shadowColor = UIColor.black.cgColor
 		self.titleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
-		self.titleLabel.layer.shadowRadius = 50
+		self.titleLabel.layer.shadowRadius = 3
 		self.titleLabel.layer.shadowOpacity = 1
 		
 		// Kicker shadow
-//		self.kickerLabel.textColor = UIColor(red: 0.8617, green: 0.1186, blue: 0.0198, alpha: 0.7)
+		self.kickerLabel.textColor = UIColor(red: 0.98, green: 0.286, blue: 0.192, alpha: 1.0)
 		self.kickerLabel.layer.shadowColor = UIColor.black.cgColor
 		self.kickerLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
 		self.kickerLabel.layer.shadowRadius = 5
 		self.kickerLabel.layer.shadowOpacity = 1
-//		self.kickerLabel.backgroundColor = .clear
-//		self.kickerLabel.layer.shouldRasterize = true
-//		self.kickerLabel.layer.masksToBounds = false
 	}
 	
 	override func layoutSubviews() {
