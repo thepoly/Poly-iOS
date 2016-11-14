@@ -32,7 +32,7 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		// Table View cells
 		self.tableView.register(StoryCell.classForCoder(), forCellReuseIdentifier: "StoryCell")
 		self.tableView.register(StoryPhotoCell.classForCoder(), forCellReuseIdentifier: "StoryPhotoCell")
-		self.tableView.estimatedRowHeight = 100
+		self.tableView.estimatedRowHeight = 200
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		
 		self.refreshStories()

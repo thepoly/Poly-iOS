@@ -71,8 +71,11 @@ class StoryPhotoCell: StoryCell {
 		)
 		
 		// Photo shadow
-		gradient.colors = [UIColor.black.withAlphaComponent(0.5).cgColor, UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.5).cgColor]
-		gradient.locations = [0.0, 0.20, 1.0]
+		gradient.colors = [UIColor.black.withAlphaComponent(0.5).cgColor,
+		                   UIColor.clear.cgColor,
+		                   UIColor.clear.cgColor,
+		                   UIColor.black.withAlphaComponent(0.5).cgColor]
+		gradient.locations = [0.0, 0.2, 0.7, 1.0]
 		self.photoView.layer.insertSublayer(gradient, at: 0)
 		
 		// Title shadow
@@ -93,8 +96,11 @@ class StoryPhotoCell: StoryCell {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		
-		// Set the correct size for the gradient in photoView
-		self.gradient.frame = self.photoView.bounds;
+		// Set the correct size for the gradient in photoView.
+		// We use contentView's bounds instead of photoView's because
+		// of some weirdness with Auto Layout not propagating to CALayers.
+		// This works for now because the bounds of contentView == photoView.
+		self.gradient.frame = self.contentView.bounds;
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
