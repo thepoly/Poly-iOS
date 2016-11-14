@@ -71,7 +71,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		)
 		// Get kicker text
 		let kicker = (self.detailItem?["Kicker"] as! String).uppercased()
-		kickerLabel.text = String(htmlEncodedString: kicker)
+		kickerLabel.text = DecoderString(kicker).decode()
 		
 		// Title
 		let titleLabel = UILabel()
@@ -79,7 +79,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		containerView.addSubview(titleLabel)
 		titleLabel.textAlignment = .left
 		let title = self.detailItem?["title"]?["rendered"] as! String
-		titleLabel.text = String(htmlEncodedString: title)
+		titleLabel.text = DecoderString(title).decode()
 		titleLabel.font = UIFont(name: "Georgia", size: 28)
 		titleLabel.numberOfLines = 0
 		titleLabel.lineBreakMode = .byWordWrapping
@@ -127,13 +127,13 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		
 		let authorAndJob = NSMutableAttributedString()
 		if let authorName = self.detailItem?["AuthorName"] as? String {
-			let authorNameDecoded = String(htmlEncodedString: authorName)!
+			let authorNameDecoded = DecoderString(authorName).decode()
 			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14)]
 			let authorString = NSAttributedString(string: authorNameDecoded, attributes: authorAttrs)
 			authorAndJob.append(authorString)
 			
 			if let authorJob = (self.detailItem?["AuthorTitle"] as? String), authorJob != "" {
-				let authorJobDecoded = String(htmlEncodedString: ", " + authorJob)!
+				let authorJobDecoded = DecoderString(", " + authorJob).decode()
 				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13)]
 				let jobString = NSAttributedString(string: authorJobDecoded, attributes: jobAttrs)
 				authorAndJob.append(jobString)
