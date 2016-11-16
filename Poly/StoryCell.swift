@@ -12,7 +12,7 @@ class StoryCell: UITableViewCell {
 	
 	var kickerLabel = UILabel()
 	var titleLabel = UILabel()
-	
+	var authorLabel = UILabel()
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier!)
@@ -53,12 +53,28 @@ class StoryCell: UITableViewCell {
 			views: ["title": self.titleLabel])
 		)
 		
-		// Vertical layout
+		// Author
+		self.authorLabel.translatesAutoresizingMaskIntoConstraints = false
+		self.contentView.addSubview(self.authorLabel)
+		self.authorLabel.textAlignment = .left
+		self.authorLabel.font = UIFont(name: "AvenirNext-Bold", size: 14)
+//		self.authorLabel.textColor = UIColor(red: 0.8617, green: 0.1186, blue: 0.0198, alpha: 1)
+		self.authorLabel.numberOfLines = 0
+		self.authorLabel.lineBreakMode = .byWordWrapping
+		// Spacing on sides of author
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]-10@750-[title]-20-|",  // priority of 750 allows StoryPhotoCell to override it
+			withVisualFormat: "H:|-20-[author]-20-|",
 			options: [],
 			metrics: nil,
-			views: ["title": self.titleLabel, "kicker": self.kickerLabel])
+			views: ["author": self.authorLabel])
+		)
+		
+		// Vertical layout
+		self.contentView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-15-[kicker]-10@750-[title]-10-[author]-14-|",  // priority of 750 allows StoryPhotoCell to override it
+			options: [],
+			metrics: nil,
+			views: ["title": self.titleLabel, "kicker": self.kickerLabel, "author": self.authorLabel])
 		)
 	}
 	

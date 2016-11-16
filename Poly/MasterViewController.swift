@@ -163,6 +163,10 @@ class MasterViewController: UITableViewController {
 		let kicker = (story["Kicker"] as! String).uppercased()
 		cell.kickerLabel.text = DecoderString(kicker).decode()
 		
+		// Author
+		let author = story["AuthorName"]! as! String
+		cell.authorLabel.text = DecoderString(author).decode()
+		
 		return cell
 	}
 	

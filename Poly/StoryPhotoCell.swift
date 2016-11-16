@@ -44,8 +44,10 @@ class StoryPhotoCell: StoryCell {
 		// Remove labels from cell contentView and add them to photoView
 		self.titleLabel.removeFromSuperview()
 		self.kickerLabel.removeFromSuperview()
+		self.authorLabel.removeFromSuperview()
 		self.photoView.addSubview(self.kickerLabel)
 		self.photoView.addSubview(self.titleLabel)
+		self.photoView.addSubview(self.authorLabel)
 		
 		// Spacing on sides of title
 		self.photoView.addConstraints(NSLayoutConstraint.constraints(
@@ -61,13 +63,20 @@ class StoryPhotoCell: StoryCell {
 			metrics: nil,
 			views: ["kicker": self.kickerLabel])
 		)
+		// Spacing on sides of author
+		self.photoView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-20-[author]-20-|",
+			options: [],
+			metrics: nil,
+			views: ["author": self.authorLabel])
+		)
 		
 		// Vertical layout
 		self.photoView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]->=10-[title]-20-|",  // priority of 750 allows StoryPhotoCell to override it
+			withVisualFormat: "V:|-15-[kicker]->=10-[title]-10-[author]-14-|",  // priority of 750 allows StoryPhotoCell to override it
 			options: [],
 			metrics: nil,
-			views: ["title": self.titleLabel, "kicker": self.kickerLabel])
+			views: ["title": self.titleLabel, "kicker": self.kickerLabel, "author": self.authorLabel])
 		)
 		
 		// Photo shadow
@@ -91,6 +100,13 @@ class StoryPhotoCell: StoryCell {
 		self.kickerLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
 		self.kickerLabel.layer.shadowRadius = 5
 		self.kickerLabel.layer.shadowOpacity = 1
+		
+		// Author shadow
+		self.authorLabel.textColor = UIColor.white
+		self.authorLabel.layer.shadowColor = UIColor.black.cgColor
+		self.authorLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+		self.authorLabel.layer.shadowRadius = 3
+		self.authorLabel.layer.shadowOpacity = 1
 	}
 	
 	override func layoutSubviews() {
