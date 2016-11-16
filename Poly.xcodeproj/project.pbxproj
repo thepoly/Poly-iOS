@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */; };
 		E900B1C31DD8DD0B00B52439 /* DecoderString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C21DD8DD0A00B52439 /* DecoderString.swift */; };
+		E900B1C51DD92C7C00B52439 /* FeaturedStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C41DD92C7C00B52439 /* FeaturedStoriesCell.swift */; };
+		E900B1C91DD94BB200B52439 /* FeaturedStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C81DD94BB200B52439 /* FeaturedStoryCell.swift */; };
 		E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90596CB1DD0425400B52439 /* StoryCell.swift */; };
 		E9AFC71F1DCFBC4500B52439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */; };
 		E9AFC7211DCFBC4500B52439 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC7201DCFBC4500B52439 /* MasterViewController.swift */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryPhotoCell.swift; sourceTree = "<group>"; };
 		E900B1C21DD8DD0A00B52439 /* DecoderString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecoderString.swift; sourceTree = "<group>"; };
+		E900B1C41DD92C7C00B52439 /* FeaturedStoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedStoriesCell.swift; sourceTree = "<group>"; };
+		E900B1C81DD94BB200B52439 /* FeaturedStoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedStoryCell.swift; sourceTree = "<group>"; };
 		E90596CB1DD0425400B52439 /* StoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
 		E9AFC71B1DCFBC4500B52439 /* Poly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				E9AFC72C1DCFBC4500B52439 /* Info.plist */,
 				E9FDA3641DD0725A00B52439 /* Assets.xcassets */,
 				E900B1C21DD8DD0A00B52439 /* DecoderString.swift */,
+				E900B1C41DD92C7C00B52439 /* FeaturedStoriesCell.swift */,
+				E900B1C81DD94BB200B52439 /* FeaturedStoryCell.swift */,
 			);
 			path = Poly;
 			sourceTree = "<group>";
@@ -270,8 +276,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E900B1C51DD92C7C00B52439 /* FeaturedStoriesCell.swift in Sources */,
 				E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */,
 				E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */,
+				E900B1C91DD94BB200B52439 /* FeaturedStoryCell.swift in Sources */,
 				E900B1C31DD8DD0B00B52439 /* DecoderString.swift in Sources */,
 				E9AFC7231DCFBC4500B52439 /* DetailViewController.swift in Sources */,
 				E9AFC7211DCFBC4500B52439 /* MasterViewController.swift in Sources */,
@@ -421,7 +429,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F6KWH2YFBK;
 				INFOPLIST_FILE = Poly/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -435,7 +443,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F6KWH2YFBK;
 				INFOPLIST_FILE = Poly/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";

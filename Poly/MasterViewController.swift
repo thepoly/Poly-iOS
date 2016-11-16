@@ -8,9 +8,13 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController, UIViewControllerPreviewingDelegate {
+class MasterViewController: UITableViewController {
 
 	var stories = [Dictionary<String, AnyObject>]()
+	var featuredStories = [Dictionary<String, AnyObject>]()
+	var categories = [Dictionary<String, AnyObject>]()
+	
+	var featuredCollectionView: UICollectionView? = nil
 
 
 	override func viewDidLoad() {
@@ -32,8 +36,14 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		// Table View cells
 		self.tableView.register(StoryCell.classForCoder(), forCellReuseIdentifier: "StoryCell")
 		self.tableView.register(StoryPhotoCell.classForCoder(), forCellReuseIdentifier: "StoryPhotoCell")
+		self.tableView.register(FeaturedStoriesCell.classForCoder(), forCellReuseIdentifier: "FeaturedStoriesCell")
 		self.tableView.estimatedRowHeight = 200
 		self.tableView.rowHeight = UITableViewAutomaticDimension
+		
+		// Featured stories cell
+		let collectionViewLayout = UICollectionViewFlowLayout()
+		collectionViewLayout.scrollDirection = .horizontal
+		self.featuredCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: collectionViewLayout)
 		
 		self.refreshStories()
 	}
@@ -48,6 +58,7 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 	}
 
 	func refreshStories() {
+		// Refresh all stories
 		let url = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?per_page=30")
 		let request = URLRequest(url: url!)
 		let session = URLSession(configuration: URLSessionConfiguration.default)
@@ -73,19 +84,53 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 				}
 			}
 		}).resume()
+		
+		// Refresh featured stories
+		let featuredURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?filter[tag]=featured&per_page=3")
+		let featuredRequest = URLRequest(url: featuredURL!)
+		_ = session.dataTask(with: featuredRequest, completionHandler: {(data, response, error) -> Void in
+			if error == nil {
+				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
+				self.featuredStories = json
+				
+				DispatchQueue.main.async {
+					// For some reason, reloadData doesn't work, but this does (we only have one section):
+//					self.collectionView?.reloadSections(IndexSet(integer: 0))
+				}
+			}
+		}).resume()
+		
+		// Refresh categories
+		let categoriesURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/categories")
+		let categoriesRequest = URLRequest(url: categoriesURL!)
+		_ = session.dataTask(with: categoriesRequest, completionHandler: {(data, response, error) -> Void in
+			if error == nil {
+				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
+				self.categories = json
+			}
+		}).resume()
 	}
 
 	// MARK: - Table View
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return 2
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if section == 0 {
+			return 1
+		}
 		return stories.count
 	}
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> StoryCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if indexPath.section == 0 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "FeaturedStoriesCell", for: indexPath) as! FeaturedStoriesCell
+			cell.masterViewController = self
+			cell.reload()
+			return cell
+		}
 		let story = stories[indexPath.row]
 		var cell: StoryCell  // this is okay because StoryPhotoCell is a subclass of StoryCell
 		
@@ -126,13 +171,21 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 		controller.detailItem = story
 		self.navigationController?.pushViewController(controller, animated: true)
 	}
-	
-	// MARK: - 3D Touch
+
+}
+
+// MARK: - 3D Touch
+
+extension MasterViewController: UIViewControllerPreviewingDelegate {
 	
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let indexPath = tableView.indexPathForRow(at: location) {
 			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
 			let detail = DetailViewController()
+			if indexPath.section == 0 {
+				// Featured stories don't work yet
+				return nil
+			}
 			detail.detailItem = stories[indexPath.row]
 			return detail
 		}
@@ -141,5 +194,57 @@ class MasterViewController: UITableViewController, UIViewControllerPreviewingDel
 	
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
 		self.navigationController?.pushViewController(viewControllerToCommit, animated: false)
+	}
+}
+
+// MARK: - Collection view
+
+extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+	
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return featuredStories.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeaturedStoryCell", for: indexPath) as! FeaturedStoryCell
+		let story = featuredStories[indexPath.row]
+		
+		// Title
+		let title = story["title"]!["rendered"] as! String
+		cell.titleLabel.text = DecoderString(title).decode()
+		
+		// Category
+		var category = ""
+		for categoryObj in self.categories {
+			// THIS NEEDS TO BE FIXED IN CASE THERE ARE NO CATEGORIES FOR A POST
+			if categoryObj["id"] as! Int == (story["categories"] as! [Int])[0] {
+				category = categoryObj["name"] as! String
+			}
+		}
+		cell.categoryLabel.text = category.uppercased()
+		
+		// Configure photo
+		let photoPath = story["Photo"]! as! String
+		if photoPath != "" {
+			let url = URL(string: "https://poly.rpi.edu" + photoPath)
+			let request = URLRequest(url: url!)
+			let session = URLSession(configuration: URLSessionConfiguration.default)
+			_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
+				if error == nil {
+					DispatchQueue.main.async {
+						cell.photoView.image = UIImage(data: data!)
+					}
+				}
+			}).resume()
+		}
+		
+		return cell
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let story = featuredStories[indexPath.row]
+		let controller = DetailViewController()
+		controller.detailItem = story
+		self.navigationController?.pushViewController(controller, animated: true)
 	}
 }
