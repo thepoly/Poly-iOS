@@ -51,6 +51,8 @@ class FeaturedStoriesCell: UITableViewCell {
 	}
 	
 	func reload() {
-		self.collectionView?.reloadSections(IndexSet(integer: 0))
+		UIView.performWithoutAnimation {
+			self.collectionView?.reloadSections(IndexSet(integer: 0))
+		}
 	}
 }
