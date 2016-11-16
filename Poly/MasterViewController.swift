@@ -14,7 +14,7 @@ class MasterViewController: UITableViewController {
 	var featuredStories = [Dictionary<String, AnyObject>]()
 	var categories = [Dictionary<String, AnyObject>]()
 	
-	var featuredCollectionView: UICollectionView? = nil
+	var featuredCollectionView: UICollectionView? = nil // for 3D Touch
 
 
 	override func viewDidLoad() {
@@ -128,6 +128,7 @@ class MasterViewController: UITableViewController {
 		if indexPath.section == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "FeaturedStoriesCell", for: indexPath) as! FeaturedStoriesCell
 			cell.masterViewController = self
+			self.featuredCollectionView = cell.collectionView // for 3D Touch
 			cell.reload()
 			return cell
 		}
@@ -182,11 +183,25 @@ extension MasterViewController: UIViewControllerPreviewingDelegate {
 		if let indexPath = tableView.indexPathForRow(at: location) {
 			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
 			let detail = DetailViewController()
-			if indexPath.section == 0 {
-				// Featured stories don't work yet
-				return nil
+			if indexPath.section != 0 {
+				// Handle cells that aren't the featured stories cell (which is in section 0)
+				detail.detailItem = stories[indexPath.row]
+				return detail
 			}
-			detail.detailItem = stories[indexPath.row]
+		}
+		
+		// Handle featured stories cell
+		// Adjust location to take scroll position into account
+		let scrolledLocation = self.featuredCollectionView!.convert(location, from: self.view)
+		if let indexPath = self.featuredCollectionView!.indexPathForItem(at: scrolledLocation) {
+			
+			// Convert cell frame to take scroll position into account
+			let frame = self.featuredCollectionView!.layoutAttributesForItem(at: indexPath)!.frame
+			let scrolledFrame = self.featuredCollectionView!.convert(frame, to: self.view)
+			
+			previewingContext.sourceRect = scrolledFrame
+			let detail = DetailViewController()
+			detail.detailItem = featuredStories[indexPath.row]
 			return detail
 		}
 		return nil
