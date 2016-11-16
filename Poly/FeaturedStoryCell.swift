@@ -63,7 +63,7 @@ class FeaturedStoryCell: UICollectionViewCell {
 		self.categoryLabel.numberOfLines = 0
 		self.categoryLabel.lineBreakMode = .byWordWrapping
 		self.categoryLabel.textColor = .white
-		self.categoryLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
+		self.categoryLabel.font = UIFont(name: "AvenirNext-Bold", size: 16)
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-2-[category]-1-|",
 			options: [],
@@ -103,7 +103,7 @@ class FeaturedStoryCell: UICollectionViewCell {
 		self.titleLabel.lineBreakMode = .byWordWrapping
 		self.titleLabel.textColor = .white
 		self.titleLabel.textAlignment = .center
-		self.titleLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightThin)
+		self.titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-1-[title]-3-|",
 			options: [],
