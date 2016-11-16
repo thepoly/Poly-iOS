@@ -120,6 +120,42 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 			}).resume()
 		}
 		
+		// Photo byline
+		let photoBylineLabel = UILabel()
+		photoBylineLabel.translatesAutoresizingMaskIntoConstraints = false
+		containerView.addSubview(photoBylineLabel)
+		photoBylineLabel.textAlignment = .right
+		let photoByline = self.detailItem?["PhotoByline"] as! String
+		photoBylineLabel.text = DecoderString(photoByline).decode()
+		photoBylineLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
+		photoBylineLabel.numberOfLines = 0
+		photoBylineLabel.lineBreakMode = .byWordWrapping
+		// Spacing on sides of byline
+		containerView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-20-[byline]-20-|",
+			options: [],
+			metrics: nil,
+			views: ["byline": photoBylineLabel])
+		)
+		
+		// Photo caption
+		let photoCaptionLabel = UILabel()
+		photoCaptionLabel.translatesAutoresizingMaskIntoConstraints = false
+		containerView.addSubview(photoCaptionLabel)
+		photoCaptionLabel.textAlignment = .left
+		let photoCaption = self.detailItem?["PhotoCaption"] as! String
+		photoCaptionLabel.text = DecoderString(photoCaption).decode()
+		photoCaptionLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 13)
+		photoCaptionLabel.numberOfLines = 0
+		photoCaptionLabel.lineBreakMode = .byWordWrapping
+		// Spacing on sides of byline
+		containerView.addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-20-[caption]-20-|",
+			options: [],
+			metrics: nil,
+			views: ["caption": photoCaptionLabel])
+		)
+		
 		// Author and job
 		let authorLabel = UILabel()
 		authorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -168,10 +204,16 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		
 		// Vertical layout
 		containerView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[photo]-10-[author]-0-[article]-20-|",
+			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[author]-14-[photo]-1-[byline]-4-[caption]-0-[article]-20-|",
 			options: [],
 			metrics: nil,
-			views: ["photo": photoView, "title": titleLabel, "kicker": kickerLabel, "article": self.webView, "author": authorLabel])
+			views: ["photo": photoView,
+			        "title": titleLabel,
+			        "kicker": kickerLabel,
+			        "article": self.webView,
+			        "author": authorLabel,
+			        "byline": photoBylineLabel,
+			        "caption": photoCaptionLabel])
 		)
 		
 		// Add share button to navigation bar
