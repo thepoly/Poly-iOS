@@ -103,7 +103,7 @@ class FeaturedStoryCell: UICollectionViewCell {
 		self.titleLabel.lineBreakMode = .byWordWrapping
 		self.titleLabel.textColor = .white
 		self.titleLabel.textAlignment = .center
-		self.titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+		self.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-1-[title]-3-|",
 			options: [],
