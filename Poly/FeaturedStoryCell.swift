@@ -17,6 +17,9 @@ class FeaturedStoryCell: UICollectionViewCell {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		
+		// Accessiblity identifier for UI automation
+		self.accessibilityIdentifier = "featured-story"
+		
 		// Photo
 		self.photoView.translatesAutoresizingMaskIntoConstraints = false
 		self.contentView.addSubview(self.photoView)

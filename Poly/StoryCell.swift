@@ -19,6 +19,9 @@ class StoryCell: UITableViewCell {
 		
 		self.backgroundView?.backgroundColor = UIColor.white
 		
+		// Accessibility identifier for UI automation
+		self.accessibilityIdentifier = "story-cell"
+		
 		// Cell separator line
 		self.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
 		

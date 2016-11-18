@@ -17,6 +17,8 @@ class StoryPhotoCell: StoryCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier!)
 
+		// Accessibility identifier for UI automation
+		self.accessibilityIdentifier = "story-photo-cell"
 		
 		// Photo
 		self.photoView.translatesAutoresizingMaskIntoConstraints = false

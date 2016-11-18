@@ -21,16 +21,16 @@ class PolyTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testDecoderString() {
+		// Test DecoderString turning HTML entities into normal characters.
+		let cases = [
+			"professor&rsquo;s honor": "professor’s honor",
+			"MEN&rsquo;S AND WOMEN&rsquo;S TEAMS": "MEN’S AND WOMEN’S TEAMS",
+			"4&ndash;1": "4–1"
+		]
+		for (input, output) in cases {
+			let decoder = DecoderString(input)
+			XCTAssertEqual(decoder.decode(), output)
+		}
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
