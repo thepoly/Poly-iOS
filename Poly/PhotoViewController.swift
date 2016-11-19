@@ -28,10 +28,13 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		scrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
 		scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+		
 		let minScale = min(self.view.bounds.size.width / self.imageView.image!.size.width, self.view.bounds.size.height / self.imageView.image!.size.height)
 		scrollView.minimumZoomScale = minScale
 		scrollView.maximumZoomScale = 1
 		scrollView.delegate = self
+		scrollView.showsVerticalScrollIndicator = false
+		scrollView.showsHorizontalScrollIndicator = false
 		
 		scrollView.addSubview(self.imageView)
 		scrollView.zoomScale = minScale
