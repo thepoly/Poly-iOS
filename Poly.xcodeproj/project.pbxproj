@@ -18,6 +18,8 @@
 		E9AFC72B1DCFBC4500B52439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9AFC7291DCFBC4500B52439 /* LaunchScreen.storyboard */; };
 		E9AFC7361DCFBC4500B52439 /* PolyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC7351DCFBC4500B52439 /* PolyTests.swift */; };
 		E9AFC7411DCFBC4500B52439 /* PolyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC7401DCFBC4500B52439 /* PolyUITests.swift */; };
+		E9D943941DDF7A8200B52439 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D943931DDF7A8200B52439 /* PhotoViewController.swift */; };
+		E9D943961DDF99F100B52439 /* CenteringScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D943951DDF99F100B52439 /* CenteringScrollView.swift */; };
 		E9FDA3651DD0725A00B52439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9FDA3641DD0725A00B52439 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,8 @@
 		E9AFC73C1DCFBC4500B52439 /* PolyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PolyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9AFC7401DCFBC4500B52439 /* PolyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyUITests.swift; sourceTree = "<group>"; };
 		E9AFC7421DCFBC4500B52439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9D943931DDF7A8200B52439 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		E9D943951DDF99F100B52439 /* CenteringScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteringScrollView.swift; sourceTree = "<group>"; };
 		E9FDA3641DD0725A00B52439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +116,8 @@
 				E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */,
 				E9AFC7201DCFBC4500B52439 /* MasterViewController.swift */,
 				E9AFC7221DCFBC4500B52439 /* DetailViewController.swift */,
+				E9D943931DDF7A8200B52439 /* PhotoViewController.swift */,
+				E9D943951DDF99F100B52439 /* CenteringScrollView.swift */,
 				E9AFC7291DCFBC4500B52439 /* LaunchScreen.storyboard */,
 				E9AFC72C1DCFBC4500B52439 /* Info.plist */,
 				E9FDA3641DD0725A00B52439 /* Assets.xcassets */,
@@ -279,11 +285,13 @@
 				E900B1C51DD92C7C00B52439 /* FeaturedStoriesCell.swift in Sources */,
 				E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */,
 				E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */,
+				E9D943961DDF99F100B52439 /* CenteringScrollView.swift in Sources */,
 				E900B1C91DD94BB200B52439 /* FeaturedStoryCell.swift in Sources */,
 				E900B1C31DD8DD0B00B52439 /* DecoderString.swift in Sources */,
 				E9AFC7231DCFBC4500B52439 /* DetailViewController.swift in Sources */,
 				E9AFC7211DCFBC4500B52439 /* MasterViewController.swift in Sources */,
 				E9AFC71F1DCFBC4500B52439 /* AppDelegate.swift in Sources */,
+				E9D943941DDF7A8200B52439 /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

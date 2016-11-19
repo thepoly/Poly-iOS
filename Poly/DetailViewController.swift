@@ -13,6 +13,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 	weak var detailDescriptionLabel: UILabel!
 	var detailItem: Dictionary<String, AnyObject>?
 	let webView = UIWebView()
+	let photoView = UIImageView()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -92,19 +93,18 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		)
 		
 		// Photo
-		let photoView = UIImageView()
-		photoView.translatesAutoresizingMaskIntoConstraints = false
+		self.photoView.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(photoView)
 		// Maximum photo height
-		photoView.addConstraints(NSLayoutConstraint.constraints(
+		self.photoView.addConstraints(NSLayoutConstraint.constraints(
 			withVisualFormat: "V:[photo(<=200)]",
 			options: [],
 			metrics: nil,
 			views: ["photo": photoView])
 		)
-		photoView.contentMode = UIViewContentMode.scaleAspectFill
-		photoView.clipsToBounds = true
-		photoView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
+		self.photoView.contentMode = UIViewContentMode.scaleAspectFill
+		self.photoView.clipsToBounds = true
+		self.photoView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
 		// Download photo
 		let photoPath = self.detailItem?["Photo"]! as! String
 		if photoPath != "" {
@@ -114,7 +114,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 			_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
 				if error == nil {
 					DispatchQueue.main.async {
-						photoView.image = UIImage(data: data!)
+						self.photoView.image = UIImage(data: data!)
 					}
 				}
 			}).resume()
@@ -207,7 +207,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[author]-14-[photo]-1-[byline]-4-[caption]-0-[article]-20-|",
 			options: [],
 			metrics: nil,
-			views: ["photo": photoView,
+			views: ["photo": self.photoView,
 			        "title": titleLabel,
 			        "kicker": kickerLabel,
 			        "article": self.webView,
@@ -219,6 +219,11 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		// Add share button to navigation bar
 		let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
 		self.navigationItem.rightBarButtonItem = shareButton
+		
+		// Show photo view on photo tap
+		let photoTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(showPhoto))
+		photoView.addGestureRecognizer(photoTapRecognizer)
+		photoView.isUserInteractionEnabled = true
 	}
 	
 	func share() {
@@ -226,6 +231,13 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		let shareURL = NSURL(string: self.detailItem!["link"] as! String)
 		let activityViewController = UIActivityViewController(activityItems: [shareURL as Any], applicationActivities: nil)
 		self.present(activityViewController, animated: true, completion: nil)
+	}
+	
+	func showPhoto() {
+		// Show the story's photo in a new view
+		let photoViewController = PhotoViewController()
+		photoViewController.imageView.image = self.photoView.image
+		self.present(photoViewController, animated: true, completion: nil)
 	}
 	
 	func webViewDidFinishLoad(_ webView: UIWebView) {
