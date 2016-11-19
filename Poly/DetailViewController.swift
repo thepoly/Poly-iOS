@@ -206,7 +206,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		
 		// Vertical layout
 		containerView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[author]-14-[photo]-1-[byline]-4-[caption]-0-[article]-20-|",
+			withVisualFormat: "V:|-15-[kicker]-10-[title]-10-[author]-14-[photo]-1-[byline]-4-[caption]-0-[article]-10-|",
 			options: [],
 			metrics: nil,
 			views: ["photo": self.photoView,
