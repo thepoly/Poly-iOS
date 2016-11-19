@@ -8,12 +8,15 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIWebViewDelegate {
+class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDelegate {
 
 	weak var detailDescriptionLabel: UILabel!
 	var detailItem: Dictionary<String, AnyObject>?
+	let scrollView = UIScrollView()
 	let webView = UIWebView()
 	let photoView = UIImageView()
+	let navTitleView = UIScrollView()
+	let titleLabel = UILabel()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,8 +28,8 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		self.edgesForExtendedLayout = []
 		
 		// Put everything in a View inside a Scroll View
-		let scrollView = UIScrollView()
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.delegate = self
 		self.view.addSubview(scrollView)
 		let containerView = UIView()
 		containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +78,6 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		kickerLabel.text = DecoderString(kicker).decode()
 		
 		// Title
-		let titleLabel = UILabel()
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(titleLabel)
 		titleLabel.textAlignment = .left
@@ -224,6 +226,22 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		let photoTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(showPhoto))
 		photoView.addGestureRecognizer(photoTapRecognizer)
 		photoView.isUserInteractionEnabled = true
+		
+		// Scroll in title in navigation bar
+		self.navTitleView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
+		self.navTitleView.contentSize = CGSize(width: 0, height: 88)
+		self.navTitleView.isUserInteractionEnabled = false
+		self.view.addSubview(self.navTitleView)
+		
+		let navTitleLabel = UILabel(frame: CGRect(x: 0, y: 44, width: self.navTitleView.frame.width, height: 44))
+		navTitleLabel.text = titleLabel.text
+		navTitleLabel.textAlignment = .center
+		navTitleLabel.font = UIFont(name: "AvenirNext-Medium", size: 14)
+		navTitleLabel.textColor = .white
+		navTitleLabel.numberOfLines = 2
+		navTitleLabel.lineBreakMode = .byWordWrapping
+		navTitleView.addSubview(navTitleLabel)
+		self.navigationItem.titleView = navTitleView
 	}
 	
 	func share() {
@@ -245,6 +263,16 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 		if let heightNum = NumberFormatter().number(from: heightStr!) {
 			let height = CGFloat(heightNum) + 27
 			self.webView.heightAnchor.constraint(equalToConstant: height).isActive = true
+		}
+	}
+	
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if scrollView == self.scrollView {
+			let titleLabelFrame = self.titleLabel.frame
+			let inView = self.view.convert(titleLabelFrame, from: self.scrollView)
+			let titleLabelOffset = -1 * inView.minY
+			let contentOffset = CGPoint(x: 0, y: min(titleLabelOffset, 44))
+			self.navTitleView.contentOffset = contentOffset
 		}
 	}
 }
