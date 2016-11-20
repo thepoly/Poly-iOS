@@ -10,9 +10,7 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
-	var stories = [Dictionary<String, AnyObject>]()
-	var featuredStories = [Dictionary<String, AnyObject>]()
-	var categories = [Dictionary<String, AnyObject>]()
+	let api = API()
 	
 	var featuredCollectionView: UICollectionView? = nil // for 3D Touch
 
@@ -62,7 +60,9 @@ class MasterViewController: UITableViewController {
 		collectionViewLayout.scrollDirection = .horizontal
 		self.featuredCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: collectionViewLayout)
 		
-		self.refreshStories()
+		// Wait for notification that story API load is complete
+		let nc = NotificationCenter.default
+		nc.addObserver(self, selector: #selector(initialLoad), name: API.storiesLoadComplete, object: nil)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -74,67 +74,19 @@ class MasterViewController: UITableViewController {
 		}
 	}
 
-	func refreshStories() {
-		// Refresh all stories
-		let url = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?per_page=30")
-		let request = URLRequest(url: url!)
-		let session = URLSession(configuration: URLSessionConfiguration.default)
-		_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
-			if error == nil {
-				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
-				self.stories = json
-				
-				// Remove stories in PDF Archives category. Iterate in reverse so we can remove
-				// stories by index without off-by-one errors.
-				for (i, story) in self.stories.enumerated().reversed() {
-					if let categories = story["categories"] as? [Int] {
-						if categories.count == 1 {
-							if categories.contains(10) {
-								self.stories.remove(at: i)
-							}
-						}
-					}
-				}
-				
-				DispatchQueue.main.async {
-					self.tableView.reloadData()
-					
-					// Unhide table view now that we've loaded data
-					UIView.animate(withDuration: 0.2, animations: {
-						self.tableView.subviews[1].alpha = 1
-					})
-				}
-			}
-		}).resume()
-		
-		// Refresh featured stories
-		let featuredURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?filter[tag]=featured&per_page=3")
-		let featuredRequest = URLRequest(url: featuredURL!)
-		_ = session.dataTask(with: featuredRequest, completionHandler: {(data, response, error) -> Void in
-			if error == nil {
-				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
-				self.featuredStories = json
-				
-				DispatchQueue.main.async {
-					// For some reason, reloadData doesn't work, but this does (we only have one section):
-					self.featuredCollectionView?.reloadSections(IndexSet(integer: 0))
-				}
-			}
-		}).resume()
-		
-		// Refresh categories
-		let categoriesURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/categories")
-		let categoriesRequest = URLRequest(url: categoriesURL!)
-		_ = session.dataTask(with: categoriesRequest, completionHandler: {(data, response, error) -> Void in
-			if error == nil {
-				// this is bad because self.categories MUST be set before we can lay out the featured stories. please fix this
-				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
-				self.categories = json
-			}
-		}).resume()
-	}
-
 	// MARK: - Table View
+	
+	func initialLoad() {
+		// Should be called after API has loaded data and sent notification
+		
+		// Unhide table view now that we've loaded data
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+			UIView.animate(withDuration: 0.2, animations: {
+				self.tableView.subviews[1].alpha = 1
+			})
+		}
+	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 2
@@ -144,7 +96,7 @@ class MasterViewController: UITableViewController {
 		if section == 0 {
 			return 1
 		}
-		return stories.count
+		return self.api.stories.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -155,11 +107,11 @@ class MasterViewController: UITableViewController {
 			cell.reload()
 			return cell
 		}
-		let story = stories[indexPath.row]
+		let story = self.api.stories[indexPath.row]
 		var cell: StoryCell  // this is okay because StoryPhotoCell is a subclass of StoryCell
 		
 		// If there is a photo, use StoryPhotoCell
-		let photoPath = story["Photo"]! as! String
+		let photoPath = story.photoURL
 		if photoPath == "" {
 			cell = tableView.dequeueReusableCell(withIdentifier: "StoryCell", for: indexPath) as! StoryCell
 		} else {
@@ -179,24 +131,24 @@ class MasterViewController: UITableViewController {
 		}
 		
 		// Title
-		let title = story["title"]!["rendered"] as! String
+		let title = story.title
 		cell.titleLabel.text = DecoderString(title).decode()
 		
 		// Kicker
-		let kicker = (story["Kicker"] as! String).uppercased()
+		let kicker = story.kicker
 		cell.kickerLabel.text = DecoderString(kicker).decode()
 		
 		// Author
-		let author = story["AuthorName"]! as! String
+		let author = story.author
 		cell.authorLabel.text = DecoderString(author).decode()
 		
 		return cell
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let story = stories[indexPath.row]
+		let story = self.api.stories[indexPath.row]
 		let controller = DetailViewController()
-		controller.detailItem = story
+		controller.story = story
 		self.navigationController?.pushViewController(controller, animated: true)
 	}
 
@@ -212,7 +164,7 @@ extension MasterViewController: UIViewControllerPreviewingDelegate {
 			let detail = DetailViewController()
 			if indexPath.section != 0 {
 				// Handle cells that aren't the featured stories cell (which is in section 0)
-				detail.detailItem = stories[indexPath.row]
+				detail.story = self.api.stories[indexPath.row]
 				return detail
 			}
 		}
@@ -228,7 +180,7 @@ extension MasterViewController: UIViewControllerPreviewingDelegate {
 			
 			previewingContext.sourceRect = scrolledFrame
 			let detail = DetailViewController()
-			detail.detailItem = featuredStories[indexPath.row]
+			detail.story = self.api.featuredStories[indexPath.row]
 			return detail
 		}
 		return nil
@@ -244,29 +196,29 @@ extension MasterViewController: UIViewControllerPreviewingDelegate {
 extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return featuredStories.count
+		return self.api.featuredStories.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeaturedStoryCell", for: indexPath) as! FeaturedStoryCell
-		let story = featuredStories[indexPath.row]
+		let story = self.api.featuredStories[indexPath.row]
 		
 		// Title
-		let title = story["title"]!["rendered"] as! String
+		let title = story.title
 		cell.titleLabel.text = DecoderString(title).decode()
 		
 		// Category
 		var category = ""
-		for categoryObj in self.categories {
+		for categoryObj in self.api.categories {
 			// THIS NEEDS TO BE FIXED IN CASE THERE ARE NO CATEGORIES FOR A POST
-			if categoryObj["id"] as! Int == (story["categories"] as! [Int])[0] {
+			if categoryObj["id"] as! Int == story.categories[0] {
 				category = categoryObj["name"] as! String
 			}
 		}
 		cell.categoryLabel.text = category.uppercased()
 		
 		// Configure photo
-		let photoPath = story["Photo"]! as! String
+		let photoPath = story.photoURL
 		if photoPath != "" {
 			let url = URL(string: "https://poly.rpi.edu" + photoPath)
 			let request = URLRequest(url: url!)
@@ -284,16 +236,16 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let story = featuredStories[indexPath.row]
+		let story = self.api.featuredStories[indexPath.row]
 		let controller = DetailViewController()
-		controller.detailItem = story
+		controller.story = story
 		self.navigationController?.pushViewController(controller, animated: true)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
 		// center cells if they don't span the whole width of the collection view
 		
-		let cellCount = featuredStories.count
+		let cellCount = self.api.featuredStories.count
 		if cellCount == 0 {
 			// no cells!
 			return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

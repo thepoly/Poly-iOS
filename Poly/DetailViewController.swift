@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDelegate {
 
 	weak var detailDescriptionLabel: UILabel!
-	var detailItem: Dictionary<String, AnyObject>?
+	var story: Story?
 	let scrollView = UIScrollView()
 	let webView = UIWebView()
 	let photoView = UIImageView()
@@ -74,14 +74,14 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 			views: ["kicker": kickerLabel])
 		)
 		// Get kicker text
-		let kicker = (self.detailItem?["Kicker"] as! String).uppercased()
+		let kicker = self.story!.kicker
 		kickerLabel.text = DecoderString(kicker).decode()
 		
 		// Title
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(titleLabel)
 		titleLabel.textAlignment = .left
-		let title = self.detailItem?["title"]?["rendered"] as! String
+		let title = self.story!.title
 		titleLabel.text = DecoderString(title).decode()
 		titleLabel.font = UIFont(name: "Georgia", size: 28)
 		titleLabel.numberOfLines = 0
@@ -108,7 +108,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		self.photoView.clipsToBounds = true
 		self.photoView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
 		// Download photo
-		let photoPath = self.detailItem?["Photo"]! as! String
+		let photoPath = self.story!.photoURL
 		if photoPath != "" {
 			let url = URL(string: "https://poly.rpi.edu" + photoPath)
 			let request = URLRequest(url: url!)
@@ -127,7 +127,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		photoBylineLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(photoBylineLabel)
 		photoBylineLabel.textAlignment = .right
-		let photoByline = self.detailItem?["PhotoByline"] as! String
+		let photoByline = self.story!.photoByline
 		photoBylineLabel.text = DecoderString(photoByline).decode()
 		photoBylineLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
 		photoBylineLabel.numberOfLines = 0
@@ -145,7 +145,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		photoCaptionLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(photoCaptionLabel)
 		photoCaptionLabel.textAlignment = .left
-		let photoCaption = self.detailItem?["PhotoCaption"] as! String
+		let photoCaption = self.story!.photoCaption
 		photoCaptionLabel.text = DecoderString(photoCaption).decode()
 		photoCaptionLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 13)
 		photoCaptionLabel.numberOfLines = 0
@@ -164,13 +164,13 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		containerView.addSubview(authorLabel)
 		
 		let authorAndJob = NSMutableAttributedString()
-		if let authorName = self.detailItem?["AuthorName"] as? String {
+		if let authorName = self.story?.author {
 			let authorNameDecoded = DecoderString(authorName).decode()
 			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14)]
 			let authorString = NSAttributedString(string: authorNameDecoded, attributes: authorAttrs)
 			authorAndJob.append(authorString)
 			
-			if let authorJob = (self.detailItem?["AuthorTitle"] as? String), authorJob != "" {
+			if let authorJob = self.story?.authorTitle, authorJob != "" {
 				let authorJobDecoded = DecoderString(", " + authorJob).decode()
 				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13)]
 				let jobString = NSAttributedString(string: authorJobDecoded, attributes: jobAttrs)
@@ -197,7 +197,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		containerView.addSubview(webView)
 		// Construct HTML string by concatenating article CSS and article content from poly.rpi.edu API
 		var HTMLString = "<html><head><style>body {font-family: Georgia; margin: 20px; line-height: 27px; font-size: 18px;}</style></head><body>"
-		HTMLString += self.detailItem?["content"]?["rendered"] as! String
+		HTMLString += self.story!.article
 		HTMLString += "</body></html>"
 		self.webView.loadHTMLString(HTMLString, baseURL: nil)
 		self.webView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
@@ -246,7 +246,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 	
 	func share() {
 		// Share the article with UIActivityViewController
-		let shareURL = NSURL(string: self.detailItem!["link"] as! String)
+		let shareURL = NSURL(string: self.story!.link)
 		let activityViewController = UIActivityViewController(activityItems: [shareURL as Any], applicationActivities: nil)
 		self.present(activityViewController, animated: true, completion: nil)
 	}
