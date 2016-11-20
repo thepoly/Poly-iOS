@@ -288,4 +288,35 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 		controller.detailItem = story
 		self.navigationController?.pushViewController(controller, animated: true)
 	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+		// center cells if they don't span the whole width of the collection view
+		
+		let cellCount = featuredStories.count
+		if cellCount < 1 {
+			// no cells!
+			return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		}
+		let cellWidth = 200 // from FeaturedStoriesCell
+		let collectionViewWidth = collectionView.frame.width
+		
+		let totalCellWidth = cellWidth * cellCount
+		let totalSpacingWidth = 10 * (cellCount - 1)
+		let totalWidth = totalCellWidth + totalSpacingWidth
+		
+		if CGFloat(totalWidth) > collectionViewWidth {
+			// return normal insets if cells fill the width
+			return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		}
+		
+		let leftInset = (collectionViewWidth - CGFloat(totalWidth)) / 2;
+		let rightInset = leftInset
+		
+		return UIEdgeInsets(top: 10, left: leftInset, bottom: 10, right: rightInset)
+	}
+	
+	override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+		// insets need to be recalculated after rotate because cells may not fill width
+		self.featuredCollectionView!.reloadData()
+	}
 }
