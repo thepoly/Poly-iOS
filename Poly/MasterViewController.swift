@@ -21,6 +21,20 @@ class MasterViewController: UITableViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		
+		// Hide table view until we have loaded some data
+		self.tableView.subviews[0].alpha = 0
+		// Put the Poly lettermark behind the table view
+		let loadingFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+		let loadingView = UIView(frame: loadingFrame)
+		let loadingLogoView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+		loadingLogoView.image = UIImage(named: "Lettermark")
+		loadingLogoView.layer.cornerRadius = 10
+		loadingLogoView.layer.masksToBounds = true
+		loadingLogoView.center = CGPoint(x: self.view.center.x, y: self.view.frame.height / 2 - 40)
+		loadingLogoView.alpha = 0.1
+		loadingView.addSubview(loadingLogoView)
+		self.tableView.insertSubview(loadingView, at: 0)
+		
 		// Set Poly logo in navbar
 		let navBarLogoView = UIImageView(frame: CGRect(x: 0, y: 0, width: 3, height: 33))
 		navBarLogoView.image = UIImage(named: "Navigation Bar Logo")
@@ -32,6 +46,9 @@ class MasterViewController: UITableViewController {
 		
 		// 3D Touch Peek and Pop
 		registerForPreviewing(with: self, sourceView: self.view)
+		
+		// Hide table view cell separator
+		self.tableView.separatorStyle = .none
 		
 		// Table View cells
 		self.tableView.register(StoryCell.classForCoder(), forCellReuseIdentifier: "StoryCell")
@@ -81,6 +98,11 @@ class MasterViewController: UITableViewController {
 				
 				DispatchQueue.main.async {
 					self.tableView.reloadData()
+					
+					// Unhide table view now that we've loaded data
+					UIView.animate(withDuration: 0.2, animations: {
+						self.tableView.subviews[1].alpha = 1
+					})
 				}
 			}
 		}).resume()
