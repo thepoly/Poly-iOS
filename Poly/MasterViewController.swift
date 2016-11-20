@@ -117,7 +117,7 @@ class MasterViewController: UITableViewController {
 				
 				DispatchQueue.main.async {
 					// For some reason, reloadData doesn't work, but this does (we only have one section):
-//					self.collectionView?.reloadSections(IndexSet(integer: 0))
+					self.featuredCollectionView?.reloadSections(IndexSet(integer: 0))
 				}
 			}
 		}).resume()
@@ -127,6 +127,7 @@ class MasterViewController: UITableViewController {
 		let categoriesRequest = URLRequest(url: categoriesURL!)
 		_ = session.dataTask(with: categoriesRequest, completionHandler: {(data, response, error) -> Void in
 			if error == nil {
+				// this is bad because self.categories MUST be set before we can lay out the featured stories. please fix this
 				let json = try! JSONSerialization.jsonObject(with: data!) as! [Dictionary<String, AnyObject>]
 				self.categories = json
 			}
@@ -293,7 +294,7 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 		// center cells if they don't span the whole width of the collection view
 		
 		let cellCount = featuredStories.count
-		if cellCount < 1 {
+		if cellCount == 0 {
 			// no cells!
 			return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		}
@@ -317,6 +318,6 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 	
 	override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
 		// insets need to be recalculated after rotate because cells may not fill width
-		self.featuredCollectionView!.reloadData()
+		self.featuredCollectionView?.reloadSections(IndexSet(integer: 0))
 	}
 }
