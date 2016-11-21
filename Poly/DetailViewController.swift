@@ -74,15 +74,13 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 			views: ["kicker": kickerLabel])
 		)
 		// Get kicker text
-		let kicker = self.story!.kicker
-		kickerLabel.text = DecoderString(kicker).decode()
+		kickerLabel.text = self.story!.kicker
 		
 		// Title
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(titleLabel)
 		titleLabel.textAlignment = .left
-		let title = self.story!.title
-		titleLabel.text = DecoderString(title).decode()
+		titleLabel.text = self.story!.title
 		titleLabel.font = UIFont(name: "Georgia", size: 28)
 		titleLabel.numberOfLines = 0
 		titleLabel.lineBreakMode = .byWordWrapping
@@ -127,8 +125,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		photoBylineLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(photoBylineLabel)
 		photoBylineLabel.textAlignment = .right
-		let photoByline = self.story!.photoByline
-		photoBylineLabel.text = DecoderString(photoByline).decode()
+		photoBylineLabel.text = self.story!.photoByline
 		photoBylineLabel.font = UIFont(name: "AvenirNext-Regular", size: 13)
 		photoBylineLabel.numberOfLines = 0
 		photoBylineLabel.lineBreakMode = .byWordWrapping
@@ -145,8 +142,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		photoCaptionLabel.translatesAutoresizingMaskIntoConstraints = false
 		containerView.addSubview(photoCaptionLabel)
 		photoCaptionLabel.textAlignment = .left
-		let photoCaption = self.story!.photoCaption
-		photoCaptionLabel.text = DecoderString(photoCaption).decode()
+		photoCaptionLabel.text = self.story!.photoCaption
 		photoCaptionLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 13)
 		photoCaptionLabel.numberOfLines = 0
 		photoCaptionLabel.lineBreakMode = .byWordWrapping
@@ -165,15 +161,13 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		
 		let authorAndJob = NSMutableAttributedString()
 		if let authorName = self.story?.author {
-			let authorNameDecoded = DecoderString(authorName).decode()
 			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14)]
-			let authorString = NSAttributedString(string: authorNameDecoded, attributes: authorAttrs)
+			let authorString = NSAttributedString(string: authorName, attributes: authorAttrs)
 			authorAndJob.append(authorString)
 			
 			if let authorJob = self.story?.authorTitle, authorJob != "" {
-				let authorJobDecoded = DecoderString(", " + authorJob).decode()
 				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13)]
-				let jobString = NSAttributedString(string: authorJobDecoded, attributes: jobAttrs)
+				let jobString = NSAttributedString(string: ", " + authorJob, attributes: jobAttrs)
 				authorAndJob.append(jobString)
 			}
 			

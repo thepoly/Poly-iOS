@@ -30,6 +30,7 @@ class API {
 		}
 	}
 	
+	// Notifications
 	public static let storiesLoadComplete = Notification.Name("storiesLoadComplete")
 	
 	// Internal data
@@ -132,15 +133,15 @@ class API {
 				continue
 			}
 			
-			let story = Story(title: title,
-			                  author: author,
-			                  authorTitle: authorTitle,
+			let story = Story(title: DecoderString(title).decode(),
+			                  author: DecoderString(author).decode(),
+			                  authorTitle: DecoderString(authorTitle).decode(),
 			                  article: article,
-			                  kicker: kicker,
+			                  kicker: DecoderString(kicker).decode(),
 			                  categories: categories,
 			                  photoURL: photoURL,
-			                  photoByline: photoByline,
-			                  photoCaption: photoCaption,
+			                  photoByline: DecoderString(photoByline).decode(),
+			                  photoCaption: DecoderString(photoCaption).decode(),
 			                  link: link)
 			stories.append(story)
 		}

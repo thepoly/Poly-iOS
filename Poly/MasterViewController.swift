@@ -131,16 +131,13 @@ class MasterViewController: UITableViewController {
 		}
 		
 		// Title
-		let title = story.title
-		cell.titleLabel.text = DecoderString(title).decode()
+		cell.titleLabel.text = story.title
 		
 		// Kicker
-		let kicker = story.kicker
-		cell.kickerLabel.text = DecoderString(kicker).decode()
+		cell.kickerLabel.text = story.kicker
 		
 		// Author
-		let author = story.author
-		cell.authorLabel.text = DecoderString(author).decode()
+		cell.authorLabel.text = story.author
 		
 		return cell
 	}
@@ -204,8 +201,7 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 		let story = self.api.featuredStories[indexPath.row]
 		
 		// Title
-		let title = story.title
-		cell.titleLabel.text = DecoderString(title).decode()
+		cell.titleLabel.text = story.title
 		
 		// Category
 		var category = ""
