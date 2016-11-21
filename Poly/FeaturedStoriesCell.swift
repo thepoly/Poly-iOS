@@ -36,6 +36,9 @@ class FeaturedStoriesCell: UITableViewCell {
 		collectionView!.backgroundColor = .white
 		collectionView!.showsHorizontalScrollIndicator = false
 		self.contentView.heightAnchor.constraint(equalToConstant: 190).isActive = true // cell height + 20
+		
+		// Speed up reload animations
+		self.collectionView!.layer.speed = 4
 
 		self.contentView.addSubview(collectionView!)
 		collectionView!.reloadData()
