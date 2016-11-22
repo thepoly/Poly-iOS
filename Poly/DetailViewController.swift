@@ -17,6 +17,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 	let photoView = UIImageView()
 	let navTitleView = UIScrollView()
 	let titleLabel = UILabel()
+	let activity = NSUserActivity(activityType: "edu.rpi.poly.ios.Story")
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -236,6 +237,10 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		navTitleLabel.lineBreakMode = .byWordWrapping
 		navTitleView.addSubview(navTitleLabel)
 		self.navigationItem.titleView = navTitleView
+		
+		// Set activity for Handoff
+		activity.webpageURL = URL(string: self.story!.link)
+		activity.becomeCurrent()
 	}
 	
 	func share() {
