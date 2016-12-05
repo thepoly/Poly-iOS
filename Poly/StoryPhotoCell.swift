@@ -33,7 +33,7 @@ class StoryPhotoCell: StoryCell {
 			views: ["photo": self.photoView])
 		)
 		// Photo height
-		self.photoView.heightAnchor.constraint(equalToConstant: 240).isActive = true
+		self.photoView.heightAnchor.constraint(equalToConstant: 280).isActive = true
 		
 		// Vertical layout with photo
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
@@ -85,8 +85,9 @@ class StoryPhotoCell: StoryCell {
 		gradient.colors = [UIColor.black.withAlphaComponent(0.5).cgColor,
 		                   UIColor.clear.cgColor,
 		                   UIColor.clear.cgColor,
-		                   UIColor.black.withAlphaComponent(0.5).cgColor]
-		gradient.locations = [0.0, 0.2, 0.7, 1.0]
+		                   UIColor.black.withAlphaComponent(0.8).cgColor,
+						   UIColor.black.withAlphaComponent(0.9).cgColor]
+		gradient.locations = [0.0, 0.2, 0.5, 0.8, 1.0]
 		self.photoView.layer.insertSublayer(gradient, at: 0)
 		
 		// Title shadow
