@@ -41,6 +41,9 @@ class API {
 	private var _categories = [Dictionary<String, AnyObject>]()
 	private var categoriesLoaded = false
 	
+	// API root
+	private let apiURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/")
+	
 	init() {
 		loadStories()
 	}
@@ -57,7 +60,7 @@ class API {
 	
 	func loadStories() {
 		// Refresh all stories
-		let url = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?per_page=30")
+		let url = URL(string: "posts?per_page=30", relativeTo: self.apiURL)
 		let request = URLRequest(url: url!)
 		let session = URLSession(configuration: URLSessionConfiguration.default)
 		_ = session.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
@@ -80,11 +83,13 @@ class API {
 				self.storiesLoaded = true
 				
 				self.notifyLoadComplete()
+			} else {
+				print(error)
 			}
 		}).resume()
 		
 		// Refresh featured stories
-		let featuredURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/posts?filter[tag]=featured&per_page=3")
+		let featuredURL = URL(string: "posts?tags=15&per_page=3", relativeTo: self.apiURL)
 		let featuredRequest = URLRequest(url: featuredURL!)
 		_ = session.dataTask(with: featuredRequest, completionHandler: {(data, response, error) -> Void in
 			if error == nil {
@@ -93,11 +98,13 @@ class API {
 				self.featuredStoriesLoaded = true
 				
 				self.notifyLoadComplete()
+			} else {
+				print(error)
 			}
 		}).resume()
 		
 		// Refresh categories
-		let categoriesURL = URL(string: "https://poly.rpi.edu/wp-json/wp/v2/categories")
+		let categoriesURL = URL(string: "categories", relativeTo: self.apiURL)
 		let categoriesRequest = URLRequest(url: categoriesURL!)
 		_ = session.dataTask(with: categoriesRequest, completionHandler: {(data, response, error) -> Void in
 			if error == nil {
@@ -106,6 +113,8 @@ class API {
 				self.categoriesLoaded = true
 				
 				self.notifyLoadComplete()
+			} else {
+				print(error)
 			}
 		}).resume()
 	}
