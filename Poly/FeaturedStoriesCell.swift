@@ -11,7 +11,7 @@ import UIKit
 class FeaturedStoriesCell: UITableViewCell {
 	
 	var collectionView: UICollectionView?
-	var masterViewController: MasterViewController? {
+	var masterViewController: HomeViewController? {
 		didSet {
 			// All the data is in MasterViewController (for now... hopefully...)
 			self.collectionView!.dataSource = self.masterViewController

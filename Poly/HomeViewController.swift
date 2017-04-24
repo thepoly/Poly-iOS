@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class HomeViewController: UITableViewController {
 
 	let api = API()
 	
@@ -153,7 +153,7 @@ class MasterViewController: UITableViewController {
 
 // MARK: - 3D Touch
 
-extension MasterViewController: UIViewControllerPreviewingDelegate {
+extension HomeViewController: UIViewControllerPreviewingDelegate {
 	
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let indexPath = tableView.indexPathForRow(at: location) {
@@ -190,7 +190,7 @@ extension MasterViewController: UIViewControllerPreviewingDelegate {
 
 // MARK: - Collection view
 
-extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return self.api.featuredStories.count

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
 		// Override point for customization after application launch.
 		self.window = UIWindow(frame: UIScreen.main.bounds)
 		
-		let navigationController = UINavigationController(rootViewController: MasterViewController())
+		let navigationController = UINavigationController(rootViewController: HomeViewController())
 		// Poly color in navbar
 		navigationController.navigationBar.barTintColor = UIColor(red: 0.8617, green: 0.1186, blue: 0.0198, alpha: 1)
 		navigationController.navigationBar.tintColor = .white
