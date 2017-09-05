@@ -50,7 +50,6 @@ class API {
 	
 	func notifyLoadComplete() {
 		// Check that load is actually complete, and then send notification if it is
-		
 		if self.storiesLoaded && self.featuredStoriesLoaded && self.categoriesLoaded {
 			// Send notification that load is complete
 			let nc = NotificationCenter.default
@@ -84,7 +83,7 @@ class API {
 				
 				self.notifyLoadComplete()
 			} else {
-				print(error)
+				print(error as Any)
 			}
 		}).resume()
 		
@@ -99,7 +98,7 @@ class API {
 				
 				self.notifyLoadComplete()
 			} else {
-				print(error)
+				print(error as Any)
 			}
 		}).resume()
 		
@@ -114,7 +113,7 @@ class API {
 				
 				self.notifyLoadComplete()
 			} else {
-				print(error)
+				print(error as Any)
 			}
 		}).resume()
 	}

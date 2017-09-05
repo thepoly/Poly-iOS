@@ -162,12 +162,12 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		
 		let authorAndJob = NSMutableAttributedString()
 		if let authorName = self.story?.author {
-			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14)]
+			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14) as Any]
 			let authorString = NSAttributedString(string: authorName, attributes: authorAttrs)
 			authorAndJob.append(authorString)
 			
 			if let authorJob = self.story?.authorTitle, authorJob != "" {
-				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13)]
+				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13) as Any]
 				let jobString = NSAttributedString(string: ", " + authorJob, attributes: jobAttrs)
 				authorAndJob.append(jobString)
 			}
