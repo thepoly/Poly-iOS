@@ -162,12 +162,12 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		
 		let authorAndJob = NSMutableAttributedString()
 		if let authorName = self.story?.author {
-			let authorAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 14) as Any]
+			let authorAttrs = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-Bold", size: 14) as Any]
 			let authorString = NSAttributedString(string: authorName, attributes: authorAttrs)
 			authorAndJob.append(authorString)
 			
 			if let authorJob = self.story?.authorTitle, authorJob != "" {
-				let jobAttrs = [NSFontAttributeName: UIFont(name: "AvenirNext-Regular", size: 13) as Any]
+				let jobAttrs = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 13) as Any]
 				let jobString = NSAttributedString(string: ", " + authorJob, attributes: jobAttrs)
 				authorAndJob.append(jobString)
 			}
@@ -237,20 +237,21 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		navTitleLabel.lineBreakMode = .byWordWrapping
 		navTitleView.addSubview(navTitleLabel)
 		self.navigationItem.titleView = navTitleView
+		self.navigationItem.largeTitleDisplayMode = .never
 		
 		// Set activity for Handoff
 		activity.webpageURL = URL(string: self.story!.link)
 		activity.becomeCurrent()
 	}
 	
-	func share() {
+	@objc func share() {
 		// Share the article with UIActivityViewController
 		let shareURL = NSURL(string: self.story!.link)
 		let activityViewController = UIActivityViewController(activityItems: [shareURL as Any], applicationActivities: nil)
 		self.present(activityViewController, animated: true, completion: nil)
 	}
 	
-	func showPhoto() {
+	@objc func showPhoto() {
 		// Show the story's photo in a new view
 		let photoViewController = PhotoViewController()
 		photoViewController.imageView.image = self.photoView.image
@@ -260,7 +261,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 	func webViewDidFinishLoad(_ webView: UIWebView) {
 		let heightStr = self.webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight;")
 		if let heightNum = NumberFormatter().number(from: heightStr!) {
-			let height = CGFloat(heightNum) + 27
+			let height = CGFloat(truncating: heightNum) + 27
 			self.webView.heightAnchor.constraint(equalToConstant: height).isActive = true
 		}
 	}

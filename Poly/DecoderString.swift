@@ -32,9 +32,9 @@ class DecoderString {
 			return res
 		}
 		
-		let attributedOptions: [String : Any] = [
-			NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-			NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue
+		let attributedOptions: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+			.documentType: NSAttributedString.DocumentType.html,
+			.characterEncoding: String.Encoding.utf8.rawValue,
 		]
 		
 		do {

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
 		// Poly color in navbar
 		navigationController.navigationBar.barTintColor = UIColor(red: 0.8617, green: 0.1186, blue: 0.0198, alpha: 1)
 		navigationController.navigationBar.tintColor = .white
-		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+		navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
 		navigationController.navigationBar.barStyle = UIBarStyle.black
 		
 		self.window?.rootViewController = navigationController

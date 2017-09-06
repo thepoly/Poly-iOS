@@ -19,8 +19,6 @@ class HomeViewController: UITableViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		
-		// Hide table view until we have loaded some data
-		self.tableView.subviews[0].alpha = 0
 		// Put the Poly lettermark behind the table view
 		let loadingFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
 		let loadingView = UIView(frame: loadingFrame)
@@ -33,11 +31,13 @@ class HomeViewController: UITableViewController {
 		loadingView.addSubview(loadingLogoView)
 		self.tableView.insertSubview(loadingView, at: 0)
 		
-		// Set Poly logo in navbar
-		let navBarLogoView = UIImageView(frame: CGRect(x: 0, y: 0, width: 3, height: 33))
-		navBarLogoView.image = UIImage(named: "Navigation Bar Logo")
-		navBarLogoView.contentMode = UIViewContentMode.scaleAspectFit
-		self.navigationItem.titleView = navBarLogoView
+		// BIG titles
+		self.navigationController?.navigationBar.prefersLargeTitles = true
+
+		// Set Poly font for navbar title
+		self.title = "The Polytechnic"
+		self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Futura", size: 20) as Any]
+		self.navigationController?.navigationBar.largeTitleTextAttributes = [.font: UIFont(name: "Futura", size: 30) as Any]
 		
 		// Remove text from back button
 		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -76,15 +76,13 @@ class HomeViewController: UITableViewController {
 
 	// MARK: - Table View
 	
-	func initialLoad() {
+	@objc func initialLoad() {
 		// Should be called after API has loaded data and sent notification
 		
-		// Unhide table view now that we've loaded data
+		// Reload table view and remove lettermark now that we've loaded data
 		DispatchQueue.main.async {
 			self.tableView.reloadData()
-			UIView.animate(withDuration: 0.2, animations: {
-				self.tableView.subviews[1].alpha = 1
-			})
+			self.tableView.subviews[1].removeFromSuperview()
 		}
 	}
 
