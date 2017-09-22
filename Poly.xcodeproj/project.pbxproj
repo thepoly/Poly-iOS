@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */; };
 		E900B1C31DD8DD0B00B52439 /* DecoderString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C21DD8DD0A00B52439 /* DecoderString.swift */; };
 		E900B1C51DD92C7C00B52439 /* FeaturedStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C41DD92C7C00B52439 /* FeaturedStoriesCell.swift */; };
 		E900B1C91DD94BB200B52439 /* FeaturedStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B1C81DD94BB200B52439 /* FeaturedStoryCell.swift */; };
 		E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90596CB1DD0425400B52439 /* StoryCell.swift */; };
 		E951AD5E1DE23C3500B52439 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E951AD5D1DE23C3400B52439 /* API.swift */; };
+		E98C89911F69D72A00EF3E25 /* StoriesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C89901F69D72A00EF3E25 /* StoriesCollectionView.swift */; };
+		E98C89931F6AC40900EF3E25 /* StoryPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C89921F6AC40900EF3E25 /* StoryPhotoCell.swift */; };
 		E9AFC71F1DCFBC4500B52439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */; };
 		E9AFC7211DCFBC4500B52439 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC7201DCFBC4500B52439 /* HomeViewController.swift */; };
 		E9AFC7231DCFBC4500B52439 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFC7221DCFBC4500B52439 /* DetailViewController.swift */; };
@@ -43,12 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryPhotoCell.swift; sourceTree = "<group>"; };
 		E900B1C21DD8DD0A00B52439 /* DecoderString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecoderString.swift; sourceTree = "<group>"; };
 		E900B1C41DD92C7C00B52439 /* FeaturedStoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedStoriesCell.swift; sourceTree = "<group>"; };
 		E900B1C81DD94BB200B52439 /* FeaturedStoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedStoryCell.swift; sourceTree = "<group>"; };
 		E90596CB1DD0425400B52439 /* StoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
 		E951AD5D1DE23C3400B52439 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		E98C89901F69D72A00EF3E25 /* StoriesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesCollectionView.swift; sourceTree = "<group>"; };
+		E98C89921F6AC40900EF3E25 /* StoryPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPhotoCell.swift; sourceTree = "<group>"; };
 		E9AFC71B1DCFBC4500B52439 /* Poly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9AFC7201DCFBC4500B52439 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -117,8 +119,9 @@
 			children = (
 				E9AFC71E1DCFBC4500B52439 /* AppDelegate.swift */,
 				E90596CB1DD0425400B52439 /* StoryCell.swift */,
-				E900B1C01DD5609100B52439 /* StoryPhotoCell.swift */,
+				E98C89921F6AC40900EF3E25 /* StoryPhotoCell.swift */,
 				E9AFC7201DCFBC4500B52439 /* HomeViewController.swift */,
+				E98C89901F69D72A00EF3E25 /* StoriesCollectionView.swift */,
 				E9AFC7221DCFBC4500B52439 /* DetailViewController.swift */,
 				E9D943931DDF7A8200B52439 /* PhotoViewController.swift */,
 				E9D943951DDF99F100B52439 /* CenteringScrollView.swift */,
@@ -215,23 +218,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "The Rensselaer Polytechnic";
 				TargetAttributes = {
 					E9AFC71A1DCFBC4400B52439 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = F6KWH2YFBK;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					E9AFC7301DCFBC4500B52439 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = F6KWH2YFBK;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = E9AFC71A1DCFBC4400B52439;
 					};
 					E9AFC73B1DCFBC4500B52439 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = F6KWH2YFBK;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = E9AFC71A1DCFBC4400B52439;
 					};
@@ -291,13 +297,14 @@
 				E9C5297C1E0A43A800B52439 /* TabViewController.swift in Sources */,
 				E951AD5E1DE23C3500B52439 /* API.swift in Sources */,
 				E900B1C51DD92C7C00B52439 /* FeaturedStoriesCell.swift in Sources */,
-				E900B1C11DD5609100B52439 /* StoryPhotoCell.swift in Sources */,
 				E90596CC1DD0425500B52439 /* StoryCell.swift in Sources */,
 				E9D943961DDF99F100B52439 /* CenteringScrollView.swift in Sources */,
 				E900B1C91DD94BB200B52439 /* FeaturedStoryCell.swift in Sources */,
 				E900B1C31DD8DD0B00B52439 /* DecoderString.swift in Sources */,
+				E98C89911F69D72A00EF3E25 /* StoriesCollectionView.swift in Sources */,
 				E9AFC7231DCFBC4500B52439 /* DetailViewController.swift in Sources */,
 				E9AFC7211DCFBC4500B52439 /* HomeViewController.swift in Sources */,
+				E98C89931F6AC40900EF3E25 /* StoryPhotoCell.swift in Sources */,
 				E9AFC71F1DCFBC4500B52439 /* AppDelegate.swift in Sources */,
 				E9D943941DDF7A8200B52439 /* PhotoViewController.swift in Sources */,
 			);
@@ -355,7 +362,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -363,7 +372,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -387,7 +400,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -406,7 +419,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -414,7 +429,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -432,7 +451,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -447,11 +466,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F6KWH2YFBK;
 				INFOPLIST_FILE = Poly/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -461,11 +480,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F6KWH2YFBK;
 				INFOPLIST_FILE = Poly/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -479,7 +498,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.PolyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Poly.app/Poly";
 			};
 			name = Debug;
@@ -494,7 +514,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.PolyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Poly.app/Poly";
 			};
 			name = Release;
@@ -509,7 +530,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.PolyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = Poly;
 			};
 			name = Debug;
@@ -524,7 +546,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.poly.PolyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = Poly;
 			};
 			name = Release;

@@ -60,7 +60,7 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
 
     // MARK: - Navigation
 	
-	func handleSwipe(sender: UIPanGestureRecognizer) {
+	@objc func handleSwipe(sender: UIPanGestureRecognizer) {
 		
 		let percentThreshold: CGFloat = 0.25
 		
