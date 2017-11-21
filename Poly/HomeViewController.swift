@@ -231,6 +231,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		return cell
 	}
 	
+	func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)!
+		UIView.animate(withDuration: 0.2, delay: 0, options: [UIViewAnimationOptions.curveEaseInOut], animations: {
+			cell.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+		}, completion: nil)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)!
+		UIView.animate(withDuration: 0.2, delay: 0, options: [UIViewAnimationOptions.curveEaseInOut], animations: {
+			cell.transform = CGAffineTransform.identity
+		}, completion: nil)
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let story = self.api.stories[indexPath.row]
 		let controller = DetailViewController()
