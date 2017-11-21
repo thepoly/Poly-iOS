@@ -137,7 +137,6 @@ class StoryCell: UICollectionViewCell {
 	var isHeightCalculated: Bool = false
 	
 	override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-		//Exhibit A - We need to cache our calculation to prevent a crash.
 		if !isHeightCalculated {
 			setNeedsLayout()
 			layoutIfNeeded()
@@ -152,14 +151,9 @@ class StoryCell: UICollectionViewCell {
 		self.updateMask()
 		return layoutAttributes
 	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		self.updateMask()
-	}
-	
+
 	func updateMask() {
-		let path = UIBezierPath(roundedRect: self.contentView.bounds,
+		let path = UIBezierPath(roundedRect: self.containerView.bounds,
 		                        byRoundingCorners: [.topRight, .topLeft, .bottomRight, .bottomLeft],
 		                        cornerRadii: CGSize(width: 12, height: 12))
 		self.maskLayer.path = path.cgPath
