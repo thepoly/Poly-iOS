@@ -146,11 +146,24 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UIViewControllerPreviewingDelegate {
 	
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		if let indexPath = self.collectionView?.indexPathForItem(at: location), let cellAttributes = self.collectionView?.layoutAttributesForItem(at: indexPath) {
-			previewingContext.sourceRect = cellAttributes.bounds
-			let detail = DetailViewController()
-			detail.story = self.api.stories[indexPath.row]
-			return detail
+//		let newLoc = self.collectionView?.convert(location, to: self.view)
+//		if let indexPath = self.collectionView?.indexPathForItem(at: newLoc!), let cellAttributes = self.collectionView?.layoutAttributesForItem(at: indexPath) {
+//			previewingContext.sourceRect = cellAttributes.bounds
+//			let detail = DetailViewController()
+//			detail.story = self.api.stories[indexPath.row]
+//			return detail
+//		}
+		
+		guard let layoutAttributes = self.collectionView?.collectionViewLayout.layoutAttributesForElements(in: (self.collectionView?.bounds)!) else { return nil }
+		for attributes in layoutAttributes {
+			let point = self.collectionView?.convert(location, from: self.view)
+			
+			if attributes.representedElementKind == nil && attributes.frame.contains(point!) {
+				previewingContext.sourceRect = (self.collectionView?.convert(attributes.frame, to: self.view))!
+				let detail = DetailViewController()
+				detail.story = self.api.stories[attributes.indexPath.row]
+				return detail
+			}
 		}
 		
 		// Handle featured stories cell
@@ -181,7 +194,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 	
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		// 3D Touch Peek and Pop
-		registerForPreviewing(with: self, sourceView: cell)
+//		registerForPreviewing(with: self, sourceView: cell)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -192,6 +205,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		var cell: StoryCell
 		let story = self.api.stories[indexPath.row]
 		
+		/*
 		// Category
 		var category = ""
 		for categoryObj in self.api.categories {
@@ -201,6 +215,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 			}
 		}
 		//cell.categoryLabel.text = category.uppercased()
+		*/
 		
 		// Configure photo
 		let photoPath = story.photoURL
