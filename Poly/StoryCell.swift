@@ -18,8 +18,12 @@ class StoryCell: UICollectionViewCell {
 	var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
 	let maskLayer = CAShapeLayer()
 	
+	private var widthConstraint: NSLayoutConstraint?
+	
 	func setWidth(_ width: CGFloat) {
-		self.contentView.widthAnchor.constraint(equalToConstant: width).isActive = true
+		self.widthConstraint?.isActive = false
+		self.widthConstraint = self.contentView.widthAnchor.constraint(equalToConstant: width)
+		self.widthConstraint!.isActive = true
 	}
 	
 	override init(frame: CGRect) {
