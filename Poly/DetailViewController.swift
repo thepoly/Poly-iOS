@@ -248,6 +248,8 @@ class DetailViewController: UIViewController, UIWebViewDelegate, UIScrollViewDel
 		// Share the article with UIActivityViewController
 		let shareURL = NSURL(string: self.story!.link)
 		let activityViewController = UIActivityViewController(activityItems: [shareURL as Any], applicationActivities: nil)
+		// If on iPad, popover needs to be anchored to the button
+		activityViewController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
 		self.present(activityViewController, animated: true, completion: nil)
 	}
 	
