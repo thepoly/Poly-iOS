@@ -303,8 +303,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 //		return CGSize(width: self.view.bounds.width - 30, height: 160)
 //	}
 	
-	override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-		// insets need to be recalculated after rotate because cells may not fill width
-		self.featuredCollectionView?.reloadSections(IndexSet(integer: 0))
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		coordinator.animate(alongsideTransition: { context in
+			context.viewController(forKey: UITransitionContextViewControllerKey.from)
+			self.collectionView?.collectionViewLayout.invalidateLayout()
+		}, completion: { context in
+			self.collectionView?.reloadData()
+		})
 	}
 }
